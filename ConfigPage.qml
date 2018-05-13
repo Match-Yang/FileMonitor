@@ -54,7 +54,7 @@ Page {
         CmdOptionListField {
             width: parent.width
             height: parent.height / 5 * 3
-            anchors.top: watch_dir_frame.bottom
+            anchors.bottom: parent.bottom
         }
     }
 }

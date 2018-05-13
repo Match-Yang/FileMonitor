@@ -25,5 +25,6 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 10
         anchors.bottom: parent.bottom
+        selectByMouse: true
     }
 }
