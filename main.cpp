@@ -1,19 +1,22 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include <QQuickStyle>
 
-int main(int argc, char *argv[])
-{
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+#include "configmanager.h"
 
-    QGuiApplication app(argc, argv);
+int main(int argc, char *argv[]) {
+  QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    QQuickStyle::setStyle("Material");
+  QGuiApplication app(argc, argv);
 
-    QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-    if (engine.rootObjects().isEmpty())
-        return -1;
+  QQuickStyle::setStyle("Material");
 
-    return app.exec();
+  QQmlApplicationEngine engine;
+  ConfigManager cm;
+  engine.rootContext()->setContextProperty("configManager", &cm);
+  engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+  if (engine.rootObjects().isEmpty()) return -1;
+
+  return app.exec();
 }
