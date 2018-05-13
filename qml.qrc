@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>main.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>TerminalPage.qml</file>
+        <file>ConfigPage.qml</file>
+        <file>CmdOptionListField.qml</file>
+        <file>OpenPathItem.qml</file>
+    </qresource>
+    <qresource prefix="/images">
+        <file>images/baseline_folder_open_white_18dp.png</file>
+        <file>images/baseline_playlist_add_white_18dp.png</file>
+        <file>images/baseline_last_page_white_18dp.png</file>
+        <file>images/baseline_apps_white_18dp.png</file>
+    </qresource>
+</RCC>
