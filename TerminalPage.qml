@@ -39,14 +39,15 @@ Page {
                  target: ptyManager
                  onMessageArrived: {
                      show_text_edit.text = show_text_edit.text + msg
+                     show_text_edit.cursorPosition = show_text_edit.text.length
                      flick.ensureVisible(show_text_edit.cursorRectangle)
                  }
              }
+             onWidthChanged: flick.ensureVisible(show_text_edit.cursorRectangle)
+             onHeightChanged: flick.ensureVisible(show_text_edit.cursorRectangle)
          }
 
-         Component.onCompleted: {
-             ptyManager.setMessage("ls -la")
-         }
+         ScrollBar.vertical: ScrollBar {}
      }
 
 
