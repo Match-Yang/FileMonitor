@@ -43,6 +43,10 @@ Page {
                  }
              }
          }
+
+         Component.onCompleted: {
+             ptyManager.setMessage("ls -la")
+         }
      }
 
 

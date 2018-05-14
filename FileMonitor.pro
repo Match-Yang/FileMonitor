@@ -1,4 +1,4 @@
-QT += quick quickcontrols2
+QT += quick quickcontrols2 widgets
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -15,7 +15,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp \
     configmanager.cpp \
     filewatcher.cpp \
-    pdipmanager.cpp \
     ptymanager.cpp
 
 RESOURCES += qml.qrc
@@ -35,9 +34,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     configmanager.h \
     filewatcher.h \
-    pdipmanager.h \
     ptymanager.h
-
-
-
-unix:!macx: LIBS += -L"/usr/local/lib/" -lpdip
