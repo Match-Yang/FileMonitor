@@ -5,6 +5,7 @@
 
 #include "configmanager.h"
 #include "filewatcher.h"
+#include "pdipmanager.h"
 
 int main(int argc, char *argv[]) {
   QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -15,6 +16,7 @@ int main(int argc, char *argv[]) {
 
   QQmlApplicationEngine engine;
   FileWatcher watcher;
+  PdipManager pdip_manager;
   engine.rootContext()->setContextProperty("configManager",
                                            ConfigManager::instance());
   engine.rootContext()->setContextProperty("fileWatcher", &watcher);

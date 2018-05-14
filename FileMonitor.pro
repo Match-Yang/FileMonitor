@@ -14,7 +14,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp \
     configmanager.cpp \
-    filewatcher.cpp
+    filewatcher.cpp \
+    pdipmanager.cpp
 
 RESOURCES += qml.qrc
 
@@ -29,6 +30,12 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+
 HEADERS += \
     configmanager.h \
-    filewatcher.h
+    filewatcher.h \
+    pdipmanager.h
+
+
+
+unix:!macx: LIBS += -L"/usr/local/lib/" -lpdip
