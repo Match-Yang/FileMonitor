@@ -15,7 +15,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp \
     configmanager.cpp \
     filewatcher.cpp \
-    pdipmanager.cpp
+    pdipmanager.cpp \
+    ptymanager.cpp
 
 RESOURCES += qml.qrc
 
@@ -34,7 +35,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     configmanager.h \
     filewatcher.h \
-    pdipmanager.h
+    pdipmanager.h \
+    ptymanager.h
 
 
 

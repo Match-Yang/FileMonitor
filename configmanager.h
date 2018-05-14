@@ -9,6 +9,7 @@ class ConfigManager : public QObject {
  public:
   static ConfigManager *instance();
   Q_INVOKABLE const QString fileName() const;
+  Q_INVOKABLE void remove(const QString &group, const QString &key);
   Q_INVOKABLE void setValue(const QString &group, const QString &key,
                             const QVariant &value);
   Q_INVOKABLE QVariant value(const QString &group, const QString &key);

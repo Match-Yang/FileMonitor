@@ -4,12 +4,18 @@ import QtQuick.Controls 2.2
 Rectangle {
     color: "#1461b8"
 
+    readonly property string _config_group: "FilterPair"
+
     CheckBox {
         id: enable_box
         text: qsTr("Enable Auto Fill")
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.leftMargin: 15
+        checked: configManager.value(_config_group, "EnableFilter", true)
+        onCheckedChanged: {
+            configManager.setValue(_config_group, "EnableFilter", checked)
+        }
     }
 
     Column {
@@ -19,13 +25,28 @@ Rectangle {
         height: parent.height - enable_box.height - apply_option_btn.height
         FilterPairItem {
             id: passwd_item
+            pairName: "Password"
             width: parent.width
             height: 50
             markPlaceholderText: qsTr("Mark")
-            markText: "[sudo] password for"
+            inputEchoMode: TextInput.Password
             inputPlaceholderText: qsTr("Input")
-            inputText: ""
         }
+
+        Connections {
+            target: ptyManager
+            onMessageArrived: {
+                if (! enable_box.checked) {
+                    return;
+                }
+
+                // change password
+                if (passwd_item.markText != "" && msg.startsWith(passwd_item.markText)) {
+                    ptyManager.setMessage(passwd_item.inputText)
+                }
+            }
+        }
+        Component.onCompleted: ptyManager.setMessage("sudo apt-get update")
     }
 
     Button {

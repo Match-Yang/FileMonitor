@@ -14,6 +14,12 @@ ConfigManager *ConfigManager::instance() {
 
 const QString ConfigManager::fileName() const { return setting_->fileName(); }
 
+void ConfigManager::remove(const QString &group, const QString &key) {
+  setting_->beginGroup(group);
+  setting_->remove(key);
+  setting_->endGroup();
+}
+
 void ConfigManager::setValue(const QString &group, const QString &key,
                              const QVariant &value) {
   setting_->beginGroup(group);
