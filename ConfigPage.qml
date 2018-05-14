@@ -19,7 +19,7 @@ Page {
             color: "#1565c0"
         }
         Rectangle {
-            id: watch_dir_frame
+            id: open_path_frame
             width: parent.width
             height: 300
             color: "#135db0"
@@ -32,15 +32,24 @@ Page {
                     source: "qrc:/images/images/baseline_last_page_white_18dp.png"
                     placeholderText: qsTr("Select A Shell program")
                     text: "/bin/bash"
-                    ToolTip.visible: hovered
-                    ToolTip.delay: 500
-                    ToolTip.text: qsTr("Take effect on next run")
                 }
                 OpenPathItem {
                     width: parent.width
                     height: 50
                     source: "qrc:/images/images/baseline_folder_open_white_18dp.png"
                     placeholderText: qsTr("Select Target Dir To Watching")
+                    text: configManager.value("FileWatcher", "Path")
+                    onTextChanged: {
+                        if (text !== configManager.value("FileWatcher", "Path")) {
+                            fileWatcher.watchDir(text)
+                        }
+                    }
+                    Connections {
+                        target: fileWatcher
+                        onFileAdded: {
+                            console.log(path)
+                        }
+                    }
                 }
                 OpenPathItem {
                     width: parent.width

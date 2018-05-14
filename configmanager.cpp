@@ -4,6 +4,14 @@ ConfigManager::ConfigManager(QObject *parent) : QObject(parent) {
   setting_ = new QSettings("FileMonitor", "FileMonitor", this);
 }
 
+ConfigManager *ConfigManager::config_manager_ = nullptr;
+ConfigManager *ConfigManager::instance() {
+  if (config_manager_ == nullptr) {
+    config_manager_ = new ConfigManager();
+  }
+  return config_manager_;
+}
+
 const QString ConfigManager::fileName() const { return setting_->fileName(); }
 
 void ConfigManager::setValue(const QString &group, const QString &key,

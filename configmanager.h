@@ -7,7 +7,7 @@
 class ConfigManager : public QObject {
   Q_OBJECT
  public:
-  explicit ConfigManager(QObject *parent = nullptr);
+  static ConfigManager *instance();
   Q_INVOKABLE const QString fileName() const;
   Q_INVOKABLE void setValue(const QString &group, const QString &key,
                             const QVariant &value);
@@ -16,6 +16,10 @@ class ConfigManager : public QObject {
                              const QVariant &default_value);
 
  private:
+  explicit ConfigManager(QObject *parent = nullptr);
+
+ private:
+  static ConfigManager *config_manager_;
   QSettings *setting_;
 };
 
