@@ -1,12 +1,21 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
+import Qt.labs.platform 1.0
+
 Page {
-    header: Frame {
+    function urlToPath(url) {
+        var path = url.toString();
+        // remove prefixed "file://"
+        path = path.replace(/^(file:\/{2})/,"");
+        return path;
+    }
+
+    header: Rectangle {
         height: 60
-        background: Rectangle {
+//        background: Rectangle {
             color: "#1258a8"
-        }
+//        }
 
         Label {
             anchors.centerIn: parent
@@ -26,6 +35,7 @@ Page {
             Column {
                 anchors.fill: parent
                 spacing: 10
+
                 OpenPathItem {
                     width: parent.width
                     height: 50
@@ -40,32 +50,65 @@ Page {
                     }
                 }
                 OpenPathItem {
+                    id: target_item
                     width: parent.width
                     height: 50
                     source: "qrc:/images/images/baseline_folder_open_white_18dp.png"
                     placeholderText: qsTr("Select Target Dir To Watching")
-                    text: configManager.value("FileWatcher", "Path", "")
                     onTextChanged: {
                         if (text !== configManager.value("FileWatcher", "Path")) {
                             fileWatcher.watchDir(text)
+                            configManager.setValue("FileWatcher", "Path", text)
+                        }
+                    }
+                    onClicked: {
+                        target_dir_dlg.open()
+                    }
+                    Component.onCompleted: {
+                        text = configManager.value("FileWatcher", "Path", "")
+                    }
+
+                    FolderDialog {
+                        id: target_dir_dlg
+                        title: qsTr("Select Traget Dir")
+                        folder: StandardPaths.standardLocations(StandardPaths.HomeLocation)[0]
+                        onAccepted: {
+                            target_item.text = urlToPath(target_dir_dlg.folder)
                         }
                     }
                 }
                 OpenPathItem {
+                    id: script_item
                     width: parent.width
                     height: 50
                     source: "qrc:/images/images/baseline_apps_white_18dp.png"
                     placeholderText: qsTr("Select A Script To Receive File Change")
-                    text: configManager.value("Script", "Path", "")
                     onTextChanged: {
-                        configManager.setValue("Script", "Path", text)
+                        if (text !== configManager.value("Script", "Path")) {
+                            configManager.setValue("Script", "Path", text)
+                        }
                     }
+                    onClicked: script_dlg.open()
                     Connections {
                         target: fileWatcher
                         onFileAdded: {
-                            console.log(path)
+                            ptyManager.setMessage(script_item.text + " " + path)
                         }
                     }
+                    Component.onCompleted: {
+                        script_item.text = configManager.value("Script", "Path", "")
+                    }
+
+                    FileDialog {
+                        id: script_dlg
+                        title: qsTr("Select the script that will be trigger after file add on target dir")
+                        fileMode: FileDialog.OpenFile
+                        folder: StandardPaths.writableLocation(StandardPaths.HomeLocation)
+                        onAccepted: {
+                            script_item.text = urlToPath(file)
+                        }
+                    }
+
                 }
             }
         }

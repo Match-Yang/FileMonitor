@@ -5,8 +5,13 @@
 #include <QtConcurrent/QtConcurrent>
 
 PtyManager::PtyManager(QObject *parent)
-    : QObject(parent), shell_path_("/bin/bash") {
+    : QObject(parent), shell_path_("/bin/bash"), request_quit_(false) {
   initPty();
+}
+
+PtyManager::~PtyManager() {
+  request_quit_ = true;
+  setMessage("exit");
 }
 
 void PtyManager::setMessage(const QString &msg) {
@@ -61,7 +66,7 @@ void PtyManager::runMasterProcess() {
     int rc;
     char input[150];
 
-    while (true) {
+    while (!request_quit_) {
       // Wait for data from standard input and master side of PTY
       FD_ZERO(&fd_in);
       FD_SET(0, &fd_in);

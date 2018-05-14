@@ -2,9 +2,12 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 
 Item {
+    id: item
     property alias source: img.source
     property alias text: text_field.text
     property alias placeholderText: text_field.placeholderText
+
+    signal clicked()
 
     AbstractButton {
         id: btn
@@ -15,6 +18,10 @@ Item {
         Image {
             id: img
             anchors.centerIn: parent
+        }
+
+        onClicked: {
+            item.clicked()
         }
     }
 

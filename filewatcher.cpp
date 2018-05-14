@@ -17,9 +17,13 @@ FileWatcher::FileWatcher(QObject *parent) : QObject(parent) {
   }
 }
 FileWatcher::~FileWatcher() {
-  watcher_->removePaths(watcher_->directories());
-  watcher_->removePaths(watcher_->files());
-  watcher_->deleteLater();
+  //  if (!watcher_->directories().empty()) {
+  //    watcher_->removePaths(watcher_->directories());
+  //  }
+  //  if (!watcher_->files().empty()) {
+  //    watcher_->removePaths(watcher_->files());
+  //  }
+  //  watcher_->deleteLater();
 }
 
 void FileWatcher::watchDir(const QString &path) {

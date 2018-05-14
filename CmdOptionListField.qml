@@ -46,7 +46,6 @@ Rectangle {
                 }
             }
         }
-        Component.onCompleted: ptyManager.setMessage("sudo apt-get update")
     }
 
     Button {

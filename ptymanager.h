@@ -21,6 +21,7 @@ class PtyManager : public QObject {
   Q_OBJECT
  public:
   explicit PtyManager(QObject *parent = nullptr);
+  ~PtyManager();
   Q_INVOKABLE void setMessage(const QString &msg);
 
  signals:
@@ -38,6 +39,7 @@ class PtyManager : public QObject {
   QStringList shell_args_;
 
   std::mutex mutex_;
+  bool request_quit_;
 };
 
 #endif  // PTYMANAGER_H
